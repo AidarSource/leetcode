@@ -1,20 +1,19 @@
 class Solution {
     public int firstUniqChar(String s) {
-        Map<Character, Integer> freq = new HashMap<>();
-        // Iterate through string to get actual character frequency
-        for(int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            freq.put(c, freq.getOrDefault(c, 0) + 1);
-        }
-
-        // Iterate through Map to find unique character
-        for(int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if(freq.get(c) == 1) {
-                return i;
+        int ans = Integer.MAX_VALUE;
+        // Iterate from a to z which is 26 which makes it constant
+        for(char c='a'; c<='z';c++){
+            // indexOf will return first index of alphabet and lastIndexOf will return last index
+            // if both are equal then it has occured only once.
+            // through this we will get all index's which are occured once
+            // but our answer is lowest index
+            int index = s.indexOf(c);
+            if(index!=-1&&index==s.lastIndexOf(c)){
+                ans = Math.min(ans,index);
             }
         }
 
-        return -1;
+        // If ans remain's Integer.MAX_VALUE then their is no unique character
+        return ans==Integer.MAX_VALUE?-1:ans;
     }
 }
