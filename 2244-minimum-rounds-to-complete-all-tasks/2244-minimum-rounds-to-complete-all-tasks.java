@@ -1,17 +1,17 @@
 class Solution {
     public int minimumRounds(int[] tasks) {
-        int count = 0; HashMap<Integer,Integer> map = new HashMap<>();
-        
-        for(int x : tasks)
-            map.put(x,map.getOrDefault(x,0)+1);
+        Arrays.sort(tasks);
+        int res = 0;
+        int i=0;
 
-        for(int x : map.keySet()) {
-            if(map.get(x)==1)return -1;
-            else{
-                count+=map.get(x)/3;
-                if(map.get(x)%3!=0)count++;
-            }
+        while(i<tasks.length) {
+            int j=i+1;
+            while(j<tasks.length && tasks[i] == tasks[j]) j++;
+            if(j-i==1) return -1;
+            res += (j-i)%3 == 0 ? (j-i)/3 : (j-i)/3 + 1;
+            i = j;
         }
-        return count;
+        
+        return res;
     }
 }
