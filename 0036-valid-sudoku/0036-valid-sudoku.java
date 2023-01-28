@@ -6,41 +6,38 @@ class Solution {
         Set<Character> rowSet = null;
         Set<Character> colSet = null;
 
-        //check for rows
-        for (int i = 0; i < rows; i++) {
+        // checking rows
+        for(int i = 0; i < rows; i++) {
             rowSet = new HashSet<>();
-            for (int j = 0; j < cols; j++) {
-                if (board[i][j] == '.') {
+            for(int j = 0; j < cols; j++) {
+                if(board[i][j] == '.') {
                     continue;
                 }
-                if (rowSet.contains(board[i][j])) {
+                if(rowSet.contains(board[i][j])) {
                     return false;
                 }
                 rowSet.add(board[i][j]);
             }
         }
 
-        //check for cols
-        for (int i = 0; i < cols; i++) {
+        // checking columns
+        for(int i = 0; i < cols; i++) {
             colSet = new HashSet<>();
-            for (int j = 0; j < rows; j++) {
-                if (board[j][i] == '.') {
+            for(int j = 0; j < rows; j++) {
+                if(board[j][i] == '.') {
                     continue;
                 }
-                if (colSet.contains(board[j][i])) {
+                if(colSet.contains(board[j][i])) {
                     return false;
                 }
-
                 colSet.add(board[j][i]);
             }
         }
 
-        //block
-        for (int i = 0; i < rows; i = i + 3) {
-            for (int j = 0; j < cols; j = j + 3) {
-                if (!checkBlock(i, j, board)) {
-                    return false;
-                }
+        // checking block
+        for(int i = 0; i < rows; i = i + 3) {
+            for(int j = 0; j < cols; j = j + 3) {
+                if(!checkBlock(i, j, board)) return false;
             }
         }
 
