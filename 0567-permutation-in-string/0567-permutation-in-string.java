@@ -1,6 +1,8 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        if(s2.length() < s1.length()) return false;
+        if(s2.length() < s1.length()) {
+            return false;
+        }
         int[] arr = new int[26];
         for(int i = 0; i < s1.length(); i++) {
             arr[s1.charAt(i) - 'a']++;
@@ -24,11 +26,11 @@ class Solution {
         return isEmpty(arr);
     }
 
-    public boolean isEmpty(int[] arr) {
+    private boolean isEmpty(int[] arr) {
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] != 0) return false;
         }
-        
+
         return true;
     }
 }
