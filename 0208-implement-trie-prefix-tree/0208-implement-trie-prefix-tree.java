@@ -1,50 +1,55 @@
-class TrieNode {
-    public char val;
-    public boolean isWord; 
-    public TrieNode[] children = new TrieNode[26];
-    public TrieNode() {}
-    TrieNode(char c){
-        TrieNode node = new TrieNode();
-        node.val = c;
-    }
-}
+class Trie {
 
-public class Trie {
-    private TrieNode root;
+    Node root;
+
+    class Node {
+        private char value;
+        private boolean isWord;
+        private Node[] children;
+
+        public Node(char val) {
+            this.value = val;
+            this.isWord = false;
+            this.children = new Node[26];
+        }
+    }
+
     public Trie() {
-        root = new TrieNode();
-        root.val = ' ';
+        root = new Node('\0'); // dummy node
     }
-
+    
     public void insert(String word) {
-        TrieNode ws = root;
-        for(int i = 0; i < word.length(); i++){
-            char c = word.charAt(i);
-            if(ws.children[c - 'a'] == null){
-                ws.children[c - 'a'] = new TrieNode(c);
+        Node curr = root;
+        for(char x : word.toCharArray()) {
+            if(curr.children[x - 'a'] == null) {
+                curr.children[x - 'a'] = new Node(x);
             }
-            ws = ws.children[c - 'a'];
+            curr = curr.children[x - 'a'];
         }
-        ws.isWord = true;
+        curr.isWord = true;
     }
-
+    
     public boolean search(String word) {
-        TrieNode ws = root; 
-        for(int i = 0; i < word.length(); i++){
-            char c = word.charAt(i);
-            if(ws.children[c - 'a'] == null) return false;
-            ws = ws.children[c - 'a'];
-        }
-        return ws.isWord;
+        Node res = getLast(word);
+        return (res != null && res.isWord);
     }
 
-    public boolean startsWith(String prefix) {
-        TrieNode ws = root; 
-        for(int i = 0; i < prefix.length(); i++){
-            char c = prefix.charAt(i);
-            if(ws.children[c - 'a'] == null) return false;
-            ws = ws.children[c - 'a'];
+    private Node getLast(String word) {
+        Node curr = root;
+        for(char x : word.toCharArray()) {
+            if(curr.children[x - 'a'] == null) {
+                return null;
+            }
+
+            curr = curr.children[x - 'a'];
         }
+
+        return curr;
+    }
+    
+    public boolean startsWith(String prefix) {
+        Node res = getLast(prefix);
+        if(res == null) return false;
         return true;
     }
 }
