@@ -1,20 +1,35 @@
-import java.util.Arrays;
-import java.util.Comparator;
-
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
-        Arrays.sort(intervals, Comparator.comparingInt(a -> a[1]));
-        int prev = 0;
-        int count = 0;
-        
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[prev][1] > intervals[i][0]) {
-                count++;
+        int intervalsRemoved = 0;
+
+        Arrays.sort(
+            intervals,
+            (arr1, arr2) -> Integer.compare(arr1[0], arr2[0])
+        );
+
+        int[] intervalFirst = intervals[0];
+
+        for(int i = 1; i < intervals.length; i++) {
+            if(firstIntervalWithinSecond(intervalFirst, intervals[i])) {
+                // mark +1 interval to remove
+                intervalsRemoved++;
+                // determine which interval to remove
+                // remove interval that ends last
+                if(intervalFirst[1] > intervals[i][1]) {
+                    intervalFirst = intervals[i];
+                }
             } else {
-                prev = i;
+                intervalFirst = intervals[i];
             }
         }
-        
-        return count;
+
+        return intervalsRemoved;
+    }
+
+    public boolean firstIntervalWithinSecond(
+        int[] intervalFirst,
+        int[] intervalSecond
+    ) {
+        return intervalSecond[0] < intervalFirst[1];
     }
 }
