@@ -9,11 +9,11 @@ class Solution {
 
             for(int i = 0; i < t.length; i++) {
                 if(t[i] == target[i]) {
-                    good.add(t[i]);
+                    good.add(i);
                 }
             }
         }
 
-        return len(good) == 3;
+        return good.size() == 3;
     }
 }
